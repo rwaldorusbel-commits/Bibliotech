@@ -1,0 +1,4 @@
+storage/*.log
+storage/last_maintenance
+public/assets/uploads/covers/*
+!public/assets/uploads/covers/.gitkeep
