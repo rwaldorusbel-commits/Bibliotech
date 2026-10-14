@@ -1,7 +1,17 @@
 <?php
 class HomeController extends Controller {
+
     function index() {
-        $stats = ['libros' => (int)DB::val('SELECT COALESCE(SUM(copies_total),0) FROM books WHERE activo=1'), 'titulos' => (int)DB::val('SELECT COUNT(*) FROM books WHERE activo=1')];
-        $this->render('home/index', compact('stats'), 'Inicio');
+        // Si NO está logueado → redirigir al LOGIN
+        if (!Auth::check()) {
+            redirect('auth/login');
+        }
+
+        // Si SÍ está logueado → redirigir según el rol
+        $u = Auth::user();
+        if (in_array($u['rol'], ['administrador', 'bibliotecario'])) {
+            redirect('admin');
+        }
+        redirect('catalogo');
     }
 }

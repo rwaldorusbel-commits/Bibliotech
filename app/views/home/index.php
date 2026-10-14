@@ -1,11 +1,32 @@
+<?php 
+// Aseguramos que $stats exista para evitar errores
+$stats = $stats ?? ['titulos' => 0, 'libros' => 0]; 
+?>
+
 <section class="hero">
-  <h1>Tu biblioteca, ahora en línea</h1>
-  <p>Consulta el catálogo, reserva tus libros, revisa tus préstamos y multas desde cualquier lugar.</p>
-  <a class="btn btn-lg" href="<?= url(Auth::check() ? 'catalogo' : 'auth/register') ?>">Comenzar Ahora</a>
+  <h1>Plataforma BiblioTech</h1>
+  <p>Solución tecnológica desarrollada sobre entorno LAMP.</p>
+  <a href="<?= url('catalogo') ?>" class="btn-hero">Comenzar Ahora</a>
 </section>
-<section class="grid3">
-  <div class="card"><h3>🔎 Catálogo inteligente</h3><p>Busca por título, autor, categoría, ISBN o palabra clave y filtra por disponibilidad.</p></div>
-  <div class="card"><h3>⏱️ Reserva en línea</h3><p>Reserva y recoge tu libro en un plazo de <?= (int)Setting::get('plazo_recojo_horas', 48) ?> horas.</p></div>
-  <div class="card"><h3>🔔 Avisos por correo</h3><p>Recordatorios de vencimiento y aviso cuando un libro vuelva a estar disponible.</p></div>
-</section>
-<p class="muted center"><?= (int)$stats['titulos'] ?> títulos · <?= (int)$stats['libros'] ?> ejemplares</p>
+
+<h2 class="section-title">Características</h2>
+
+<div class="features">
+  <div class="feature-card">
+    <div class="feature-icon">📖</div>
+    <h3>Reserva online</h3>
+    <p>Reserva tus libros desde cualquier dispositivo.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">📊</div>
+    <h3>Control de stock</h3>
+    <p>Consulta disponibilidad en tiempo real.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">💰</div>
+    <h3>Gestión de multas</h3>
+    <p>Cálculo automático de moras por retraso.</p>
+  </div>
+</div>
+
+<p class="stats"><?= $stats['titulos'] ?> títulos · <?= $stats['libros'] ?> ejemplares</p>

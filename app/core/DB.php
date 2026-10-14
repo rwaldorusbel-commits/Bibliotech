@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/Traductor.php'; // Incluir el traductor
+
 class DB {
     private static ?PDO $pdo = null;
     static function pdo(): PDO {
@@ -12,7 +14,15 @@ class DB {
         }
         return self::$pdo;
     }
-    static function run($sql, $p = []) { $s = self::pdo()->prepare($sql); $s->execute($p); return $s; }
+    
+    // Modificamos run() para que traduzca el SQL antes de ejecutarlo
+    static function run($sql, $p = []) { 
+        $sql = Traductor::traducir($sql); // <-- Aquí ocurre la magia
+        $s = self::pdo()->prepare($sql); 
+        $s->execute($p); 
+        return $s; 
+    }
+    
     static function all($sql, $p = []) { return self::run($sql, $p)->fetchAll(); }
     static function one($sql, $p = []) { $r = self::run($sql, $p)->fetch(); return $r ?: null; }
     static function val($sql, $p = []) { $v = self::run($sql, $p)->fetchColumn(); return $v === false ? null : $v; }
